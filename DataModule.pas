@@ -33,12 +33,9 @@ uses Principal;
 {$R *.dfm}
 
 procedure TDM.DataModuleCreate(Sender: TObject);
-  var
-    Conecta: TIniFile;
 begin
-  Conecta := TIniFile.Create('C:\DbConfig.INI');
   Connection.Connected := False;
-  Connection.Params.Database := 'C:\75GCF_TrabalhoFinal\DataBase\MERCADO_DELIVERY.FDB';
+  Connection.Params.Database := 'C:\Git\75GCF_TrabalhoFinal\DataBase\MERCADO_DELIVERY.FDB';
   Connection.Connected := True;
 end;
 
