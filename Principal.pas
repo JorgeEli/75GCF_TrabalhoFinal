@@ -30,6 +30,7 @@ type
     procedure BtProdutosClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtFornecedoresClick(Sender: TObject);
+    procedure BtClientesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,7 +44,15 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule, Produtos, Fornecedores;
+uses DataModule, Produtos, Fornecedores, Clientes;
+
+procedure TFPrincipal.BtClientesClick(Sender: TObject);
+begin
+  if not(assigned(FClientes)) then
+    Application.CreateForm(TFClientes, FClientes);
+  FClientes.WindowState := wsMaximized;
+  FClientes.ShowModal;
+end;
 
 procedure TFPrincipal.BtFornecedoresClick(Sender: TObject);
 begin

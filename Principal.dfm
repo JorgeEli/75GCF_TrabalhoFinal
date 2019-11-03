@@ -7832,6 +7832,7 @@ object FPrincipal: TFPrincipal
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 2
+        OnClick = BtClientesClick
       end
     end
     object Panel8: TPanel

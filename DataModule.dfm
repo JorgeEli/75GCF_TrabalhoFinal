@@ -7,7 +7,11 @@ object DM: TDM
     Params.Strings = (
       'Password=masterkey'
       'User_Name=SYSDBA'
-      'DriverID=FB')
+      'DriverID=FB'
+      
+        'Database=C:\Git\75GCF_TrabalhoFinal\DataBase\MERCADO_DELIVERY.FD' +
+        'B')
+    Connected = True
     LoginPrompt = False
     Transaction = Transaction
     Left = 56

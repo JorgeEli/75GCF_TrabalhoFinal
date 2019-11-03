@@ -24,7 +24,7 @@ object FProdutos: TFProdutos
     Top = 0
     Width = 1008
     Height = 729
-    ActivePage = TabListagem
+    ActivePage = TabCadastro
     Align = alClient
     TabOrder = 0
     object TabListagem: TTabSheet
@@ -109,7 +109,7 @@ object FProdutos: TFProdutos
           Left = 3
           Top = 126
           Width = 286
-          Height = 28
+          Height = 27
           CharCase = ecUpperCase
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -655,7 +655,7 @@ object FProdutos: TFProdutos
           Top = 9
           Width = 100
           Height = 90
-          Hint = 'Clique aqui para fazer um  novo cadastro de produto.'
+          Hint = 'Clique aqui para atualizar os produtos.'
           Caption = 'Atualizar'
           Glyph.Data = {
             E61D0000424DE61D000000000000360000002800000032000000320000000100
@@ -1347,7 +1347,6 @@ object FProdutos: TFProdutos
           Layout = blGlyphTop
           TabOrder = 1
           OnClick = BtExcluirClick
-          ExplicitHeight = 70
         end
         object BtCancelar: TBitBtn
           Left = 403
@@ -1700,8 +1699,6 @@ object FProdutos: TFProdutos
           Layout = blGlyphTop
           TabOrder = 3
           OnClick = BtCancelarClick
-          ExplicitLeft = 267
-          ExplicitHeight = 70
         end
         object BtEditar: TBitBtn
           Left = 267
@@ -2054,8 +2051,6 @@ object FProdutos: TFProdutos
           Layout = blGlyphTop
           TabOrder = 2
           OnClick = BtEditarClick
-          ExplicitLeft = 251
-          ExplicitHeight = 70
         end
         object BtSalvar: TBitBtn
           Left = 539
@@ -2408,8 +2403,6 @@ object FProdutos: TFProdutos
           Layout = blGlyphTop
           TabOrder = 4
           OnClick = BtSalvarClick
-          ExplicitLeft = 675
-          ExplicitHeight = 70
         end
         object BtNovo: TBitBtn
           Left = 1
@@ -2762,7 +2755,6 @@ object FProdutos: TFProdutos
           Layout = blGlyphTop
           TabOrder = 0
           OnClick = BtNovoClick
-          ExplicitHeight = 70
         end
         object BtAtualizar: TBitBtn
           Left = 675
@@ -3015,9 +3007,6 @@ object FProdutos: TFProdutos
           Layout = blGlyphTop
           TabOrder = 5
           OnClick = BtAtualizarClick
-          ExplicitLeft = 691
-          ExplicitTop = -7
-          ExplicitHeight = 70
         end
       end
       object Panel4: TPanel
@@ -3029,7 +3018,6 @@ object FProdutos: TFProdutos
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 2
-        ExplicitHeight = 460
       end
     end
   end
