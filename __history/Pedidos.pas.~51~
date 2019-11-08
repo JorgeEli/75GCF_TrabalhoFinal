@@ -48,10 +48,6 @@ type
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
-    DBText1: TDBText;
-    DBText2: TDBText;
-    DBText3: TDBText;
-    DBText4: TDBText;
     DBGrid2: TDBGrid;
     QryItens: TFDQuery;
     DsItens: TDataSource;
@@ -86,6 +82,34 @@ type
     QryProdutos: TFDQuery;
     DsProdutos: TDataSource;
     QryItensPEDIDO_TOTAL_BRUTO_ITEM: TFMTBCDField;
+    QryPedidosPEDIDO_CODIGO: TIntegerField;
+    QryPedidosPEDIDO_DATA: TDateField;
+    QryPedidosPEDIDO_VALOR_BRUTO: TFMTBCDField;
+    QryPedidosPEDIDO_VALOR_DESCONTO: TFMTBCDField;
+    QryPedidosPEDIDO_PERC_DESCONTO: TFMTBCDField;
+    QryPedidosPEDIDO_VALOR_LIQUIDO: TFMTBCDField;
+    QryPedidosCLIENTE_CODIGO: TIntegerField;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    QryListagemPEDIDO_CODIGO: TIntegerField;
+    QryListagemPEDIDO_DATA: TDateField;
+    QryListagemPEDIDO_VALOR_BRUTO: TFMTBCDField;
+    QryListagemPEDIDO_VALOR_DESCONTO: TFMTBCDField;
+    QryListagemPEDIDO_PERC_DESCONTO: TFMTBCDField;
+    QryListagemPEDIDO_VALOR_LIQUIDO: TFMTBCDField;
+    QryListagemCLIENTE_CODIGO: TIntegerField;
+    QryListagemCLIENTE_NOME: TStringField;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    DBEdit6: TDBEdit;
+    DBEdit7: TDBEdit;
+    DBEdit8: TDBEdit;
+    QryPedidosCLIENTE_DESCONTO_PADRAO: TFMTBCDField;
+    QryPedidosVALOR_DESCONTO_PADRAO: TFloatField;
+    QryPedidosTOTAL_DESCONTOS: TFloatField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EdPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure EdPesquisaEnter(Sender: TObject);
@@ -125,6 +149,9 @@ type
     procedure ItemDescontoEnter(Sender: TObject);
     procedure ItemDescontoExit(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
+    procedure QryItensAfterPost(DataSet: TDataSet);
+    procedure QryPedidosNewRecord(DataSet: TDataSet);
+    procedure QryPedidosAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -178,17 +205,17 @@ end;
 procedure TFPedidos.AtualizarTotais;
   var
     QryLocal: TFDQuery;
-    Bruto, Total, Desconto: Double;
+    Bruto, Total, Desconto, DescontoPadrao, TotalDesconto: Double;
 begin
   QryLocal := TFDQuery.Create(nil);
   with QryLocal do
   begin
     Connection := DM.Connection;
     Transaction := DM.Transaction;
-    Sql.Add('SELECT SUM(PEDIDO_TOTAL_ITEM_BRUTO) AS BRUTO, ' +
+    Sql.Add('SELECT SUM(PEDIDO_TOTAL_BRUTO_ITEM) AS BRUTO, ' +
             'SUM(PEDIDO_VL_TOTAL_ITEM) AS TOTAL, ' +
             'SUM(PEDIDO_VL_DESCONTO_ITEM) AS DESCONTO ' +
-            'FROM PEDIDOS WHERE PEDIDO_CODIGO = :CODIGO');
+            'FROM PEDIDO_ITENS WHERE PEDIDO_CODIGO = :CODIGO');
     ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
     Open;
     Bruto    := FindField('BRUTO').AsFloat;
@@ -197,12 +224,14 @@ begin
     Close;
   end;
   FreeAndNil(QryLocal);
+  DescontoPadrao := Bruto * QryPedidos.FindField('CLIENTE_DESCONTO_PADRAO').AsFloat / 100;
+  TotalDesconto  := Desconto + DescontoPadrao;
   with QryPedidos do
   begin
     if not (State in [dsEdit, dsInsert]) then
       Edit;
     FindField('PEDIDO_VALOR_BRUTO').AsFloat    := Bruto;
-    FindField('PEDIDO_VALOR_LIQUIDO').AsFloat  := Total;
+    FindField('PEDIDO_VALOR_LIQUIDO').AsFloat  := Bruto - TotalDesconto;
     FindField('PEDIDO_VALOR_DESCONTO').AsFloat := Desconto;
     if Bruto > 0 then
       FindField('PEDIDO_PERC_DESCONTO').AsFloat := Desconto * 100 / Bruto
@@ -506,6 +535,12 @@ begin
   end;
 end;
 
+procedure TFPedidos.QryItensAfterPost(DataSet: TDataSet);
+begin
+  QryItens.Refresh;
+  AtualizarTotais;
+end;
+
 procedure TFPedidos.QryItensNewRecord(DataSet: TDataSet);
   function NovoItem: SmallInt;
     var
@@ -534,6 +569,18 @@ begin
   QryItens.FindField('PEDIDO_TOTAL_BRUTO_ITEM').AsFloat   := 0.00;
 end;
 
+procedure TFPedidos.QryPedidosAfterInsert(DataSet: TDataSet);
+begin
+  QryItens.Close;
+  QryItens.ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
+  QryItens.Open();
+end;
+
+procedure TFPedidos.QryPedidosNewRecord(DataSet: TDataSet);
+begin
+  QryItens.Close;
+end;
+
 procedure TFPedidos.TabCadastroShow(Sender: TObject);
 begin
   QryPedidos.Close;
@@ -543,10 +590,14 @@ begin
   QryItens.Close;
   QryItens.ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
   QryItens.Open();
+  AtualizarTotais;
 end;
 
 procedure TFPedidos.TabListagemShow(Sender: TObject);
 begin
+  if (QryListagem.State in [dsInactive]) then
+    QryListagem.Open();
+  QryListagem.Refresh;
   EdPesquisa.SetFocus;
 end;
 

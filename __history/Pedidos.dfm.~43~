@@ -881,7 +881,6 @@ object FPedidos: TFPedidos
         OnDblClick = DBGrid1DblClick
         Columns = <
           item
-            Alignment = taRightJustify
             Expanded = False
             FieldName = 'PEDIDO_CODIGO'
             Title.Alignment = taCenter
@@ -899,7 +898,6 @@ object FPedidos: TFPedidos
             Visible = True
           end
           item
-            Alignment = taRightJustify
             Expanded = False
             FieldName = 'CLIENTE_CODIGO'
             Title.Alignment = taCenter
@@ -916,7 +914,6 @@ object FPedidos: TFPedidos
             Visible = True
           end
           item
-            Alignment = taRightJustify
             Expanded = False
             FieldName = 'PEDIDO_VALOR_BRUTO'
             Title.Alignment = taCenter
@@ -925,7 +922,6 @@ object FPedidos: TFPedidos
             Visible = True
           end
           item
-            Alignment = taRightJustify
             Expanded = False
             FieldName = 'PEDIDO_PERC_DESCONTO'
             Title.Alignment = taCenter
@@ -934,7 +930,6 @@ object FPedidos: TFPedidos
             Visible = True
           end
           item
-            Alignment = taRightJustify
             Expanded = False
             FieldName = 'PEDIDO_VALOR_DESCONTO'
             Title.Alignment = taCenter
@@ -943,7 +938,6 @@ object FPedidos: TFPedidos
             Visible = True
           end
           item
-            Alignment = taRightJustify
             Expanded = False
             FieldName = 'PEDIDO_VALOR_LIQUIDO'
             Title.Alignment = taCenter
@@ -2997,18 +2991,20 @@ object FPedidos: TFPedidos
       end
       object Panel5: TPanel
         Left = 0
-        Top = 217
+        Top = 227
         Width = 1000
-        Height = 399
+        Height = 389
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 1
+        ExplicitTop = 217
+        ExplicitHeight = 399
         object DBGrid2: TDBGrid
           Left = 137
           Top = 73
           Width = 862
-          Height = 325
+          Height = 315
           Align = alClient
           Color = clGradientActiveCaption
           DataSource = DsItens
@@ -3250,11 +3246,12 @@ object FPedidos: TFPedidos
           Left = 1
           Top = 73
           Width = 136
-          Height = 325
+          Height = 315
           Align = alLeft
           Color = clActiveCaption
           ParentBackground = False
           TabOrder = 2
+          ExplicitHeight = 325
           object BtItemNovo: TBitBtn
             Left = 1
             Top = 1
@@ -5036,28 +5033,28 @@ object FPedidos: TFPedidos
         Left = 0
         Top = 0
         Width = 1000
-        Height = 105
+        Height = 99
         Align = alTop
         Color = clMoneyGreen
         ParentBackground = False
         TabOrder = 2
         object Label1: TLabel
           Left = 32
-          Top = 24
+          Top = 17
           Width = 37
           Height = 13
           Caption = 'C'#243'digo:'
         end
         object Label2: TLabel
           Left = 42
-          Top = 52
+          Top = 42
           Width = 27
           Height = 13
           Caption = 'Data:'
         end
         object Label3: TLabel
           Left = 32
-          Top = 78
+          Top = 61
           Width = 37
           Height = 13
           Alignment = taRightJustify
@@ -5065,7 +5062,7 @@ object FPedidos: TFPedidos
         end
         object EdCodigo: TDBEdit
           Left = 75
-          Top = 21
+          Top = 14
           Width = 86
           Height = 21
           DataField = 'PEDIDO_CODIGO'
@@ -5075,7 +5072,7 @@ object FPedidos: TFPedidos
         end
         object DBEdit1: TDBEdit
           Left = 75
-          Top = 48
+          Top = 38
           Width = 86
           Height = 21
           DataField = 'PEDIDO_DATA'
@@ -5085,7 +5082,7 @@ object FPedidos: TFPedidos
         end
         object LkClientes: TDBLookupComboBox
           Left = 75
-          Top = 75
+          Top = 61
           Width = 686
           Height = 21
           DataField = 'CLIENTE_CODIGO'
@@ -5100,18 +5097,19 @@ object FPedidos: TFPedidos
       end
       object GroupBox1: TGroupBox
         Left = 0
-        Top = 105
+        Top = 99
         Width = 1000
-        Height = 112
+        Height = 128
         Align = alTop
         Caption = 'VALORES::'
         Color = clMoneyGreen
         ParentBackground = False
         ParentColor = False
         TabOrder = 3
+        ExplicitTop = 105
         object Label5: TLabel
           Left = 759
-          Top = 12
+          Top = 16
           Width = 90
           Height = 16
           Alignment = taRightJustify
@@ -5124,12 +5122,12 @@ object FPedidos: TFPedidos
           ParentFont = False
         end
         object Label6: TLabel
-          Left = 749
-          Top = 34
-          Width = 100
+          Left = 353
+          Top = 59
+          Width = 208
           Height = 16
           Alignment = taRightJustify
-          Caption = 'DESCONTO (%):'
+          Caption = 'DESCONTO SOBRE PRODUTO (%):'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -5138,12 +5136,12 @@ object FPedidos: TFPedidos
           ParentFont = False
         end
         object Label7: TLabel
-          Left = 731
-          Top = 57
-          Width = 118
+          Left = 335
+          Top = 82
+          Width = 226
           Height = 16
           Alignment = taRightJustify
-          Caption = 'VALOR DESCONTO:'
+          Caption = 'VALOR DESCONTO SOBRE PRODUTO:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -5165,13 +5163,53 @@ object FPedidos: TFPedidos
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object DBText1: TDBText
-          Left = 855
-          Top = 12
-          Width = 114
-          Height = 17
+        object Label15: TLabel
+          Left = 331
+          Top = 35
+          Width = 230
+          Height = 16
           Alignment = taRightJustify
-          Color = clWhite
+          Caption = 'VALOR DESCONTO PADR'#195'O CLIENTE:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label16: TLabel
+          Left = 349
+          Top = 14
+          Width = 212
+          Height = 16
+          Alignment = taRightJustify
+          Caption = 'DESCONTO PADR'#195'O CLIENTE (%):'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label17: TLabel
+          Left = 707
+          Top = 50
+          Width = 142
+          Height = 16
+          Alignment = taRightJustify
+          Caption = 'TOTAL DE DESCONTOS:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object DBEdit2: TDBEdit
+          Left = 855
+          Top = 14
+          Width = 121
+          Height = 24
           DataField = 'PEDIDO_VALOR_BRUTO'
           DataSource = DsPedidos
           Enabled = False
@@ -5180,16 +5218,14 @@ object FPedidos: TFPedidos
           Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold, fsItalic]
-          ParentColor = False
           ParentFont = False
+          TabOrder = 0
         end
-        object DBText2: TDBText
-          Left = 855
-          Top = 34
-          Width = 114
-          Height = 17
-          Alignment = taRightJustify
-          Color = clWhite
+        object DBEdit3: TDBEdit
+          Left = 567
+          Top = 57
+          Width = 121
+          Height = 24
           DataField = 'PEDIDO_PERC_DESCONTO'
           DataSource = DsPedidos
           Enabled = False
@@ -5198,16 +5234,14 @@ object FPedidos: TFPedidos
           Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold, fsItalic]
-          ParentColor = False
           ParentFont = False
+          TabOrder = 1
         end
-        object DBText3: TDBText
-          Left = 855
-          Top = 57
-          Width = 114
-          Height = 17
-          Alignment = taRightJustify
-          Color = clWhite
+        object DBEdit4: TDBEdit
+          Left = 567
+          Top = 79
+          Width = 121
+          Height = 24
           DataField = 'PEDIDO_VALOR_DESCONTO'
           DataSource = DsPedidos
           Enabled = False
@@ -5216,16 +5250,14 @@ object FPedidos: TFPedidos
           Font.Height = -13
           Font.Name = 'Tahoma'
           Font.Style = [fsBold, fsItalic]
-          ParentColor = False
           ParentFont = False
+          TabOrder = 2
         end
-        object DBText4: TDBText
+        object DBEdit5: TDBEdit
           Left = 855
-          Top = 80
-          Width = 114
-          Height = 23
-          Alignment = taRightJustify
-          Color = clWhite
+          Top = 78
+          Width = 121
+          Height = 31
           DataField = 'PEDIDO_VALOR_LIQUIDO'
           DataSource = DsPedidos
           Enabled = False
@@ -5234,8 +5266,56 @@ object FPedidos: TFPedidos
           Font.Height = -19
           Font.Name = 'Tahoma'
           Font.Style = [fsBold, fsItalic]
-          ParentColor = False
           ParentFont = False
+          TabOrder = 3
+        end
+        object DBEdit6: TDBEdit
+          Left = 567
+          Top = 10
+          Width = 121
+          Height = 24
+          DataField = 'CLIENTE_DESCONTO_PADRAO'
+          DataSource = DsPedidos
+          Enabled = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold, fsItalic]
+          ParentFont = False
+          TabOrder = 4
+        end
+        object DBEdit7: TDBEdit
+          Left = 567
+          Top = 34
+          Width = 121
+          Height = 24
+          DataField = 'PEDIDO_VALOR_DESCONTO'
+          DataSource = DsPedidos
+          Enabled = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold, fsItalic]
+          ParentFont = False
+          TabOrder = 5
+        end
+        object DBEdit8: TDBEdit
+          Left = 855
+          Top = 46
+          Width = 121
+          Height = 24
+          DataField = 'PEDIDO_VALOR_DESCONTO'
+          DataSource = DsPedidos
+          Enabled = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold, fsItalic]
+          ParentFont = False
+          TabOrder = 6
         end
       end
     end
@@ -5253,6 +5333,55 @@ object FPedidos: TFPedidos
       'ORDER BY pd.PEDIDO_CODIGO, PEDIDO_DATA')
     Left = 736
     Top = 48
+    object QryListagemPEDIDO_CODIGO: TIntegerField
+      FieldName = 'PEDIDO_CODIGO'
+      Origin = 'PEDIDO_CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QryListagemPEDIDO_DATA: TDateField
+      FieldName = 'PEDIDO_DATA'
+      Origin = 'PEDIDO_DATA'
+    end
+    object QryListagemPEDIDO_VALOR_BRUTO: TFMTBCDField
+      FieldName = 'PEDIDO_VALOR_BRUTO'
+      Origin = 'PEDIDO_VALOR_BRUTO'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object QryListagemPEDIDO_VALOR_DESCONTO: TFMTBCDField
+      FieldName = 'PEDIDO_VALOR_DESCONTO'
+      Origin = 'PEDIDO_VALOR_DESCONTO'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object QryListagemPEDIDO_PERC_DESCONTO: TFMTBCDField
+      FieldName = 'PEDIDO_PERC_DESCONTO'
+      Origin = 'PEDIDO_PERC_DESCONTO'
+      Precision = 18
+      Size = 2
+    end
+    object QryListagemPEDIDO_VALOR_LIQUIDO: TFMTBCDField
+      FieldName = 'PEDIDO_VALOR_LIQUIDO'
+      Origin = 'PEDIDO_VALOR_LIQUIDO'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object QryListagemCLIENTE_CODIGO: TIntegerField
+      FieldName = 'CLIENTE_CODIGO'
+      Origin = 'CLIENTE_CODIGO'
+    end
+    object QryListagemCLIENTE_NOME: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CLIENTE_NOME'
+      Origin = 'CLIENTE_NOME'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 60
+    end
   end
   object DsListagem: TDataSource
     DataSet = QryListagem
@@ -5260,13 +5389,21 @@ object FPedidos: TFPedidos
     Top = 48
   end
   object QryPedidos: TFDQuery
+    AfterInsert = QryPedidosAfterInsert
+    OnNewRecord = QryPedidosNewRecord
     Connection = DM.Connection
     SQL.Strings = (
-      'SELECT * FROM PEDIDOS'
-      'WHERE PEDIDO_CODIGO = :CODIGO'
-      'ORDER BY PEDIDO_CODIGO, PEDIDO_DATA'
+      'SELECT '
+      '   p.*,'
+      '   c.CLIENTE_DESCONTO_PADRAO'
+      'FROM PEDIDOS p'
+      
+        'LEFT OUTER JOIN CLIENTES c ON c.CLIENTE_CODIGO = p.CLIENTE_CODIG' +
+        'O'
+      'WHERE p.PEDIDO_CODIGO = :CODIGO'
+      'ORDER BY p.PEDIDO_CODIGO, p.PEDIDO_DATA'
       '')
-    Left = 632
+    Left = 312
     Top = 152
     ParamData = <
       item
@@ -5302,7 +5439,6 @@ object FPedidos: TFPedidos
     object QryPedidosPEDIDO_PERC_DESCONTO: TFMTBCDField
       FieldName = 'PEDIDO_PERC_DESCONTO'
       Origin = 'PEDIDO_PERC_DESCONTO'
-      currency = True
       Precision = 18
       Size = 2
     end
@@ -5317,11 +5453,30 @@ object FPedidos: TFPedidos
       FieldName = 'CLIENTE_CODIGO'
       Origin = 'CLIENTE_CODIGO'
     end
+    object QryPedidosCLIENTE_DESCONTO_PADRAO: TFMTBCDField
+      AutoGenerateValue = arDefault
+      FieldName = 'CLIENTE_DESCONTO_PADRAO'
+      Origin = 'CLIENTE_DESCONTO_PADRAO'
+      ProviderFlags = []
+      ReadOnly = True
+      Precision = 18
+      Size = 6
+    end
+    object QryPedidosVALOR_DESCONTO_PADRAO: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'VALOR_DESCONTO_PADRAO'
+      Calculated = True
+    end
+    object QryPedidosTOTAL_DESCONTOS: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'TOTAL_DESCONTOS'
+      Calculated = True
+    end
   end
   object DsPedidos: TDataSource
     DataSet = QryPedidos
     OnStateChange = DsPedidosStateChange
-    Left = 688
+    Left = 368
     Top = 152
   end
   object QryClientes: TFDQuery
@@ -5353,8 +5508,8 @@ object FPedidos: TFPedidos
         'LEFT OUTER JOIN PRODUTOS p ON p.PRODUTO_CODIGO = i.PRODUTO_CODIG' +
         'O'
       'WHERE i.PEDIDO_CODIGO = :CODIGO')
-    Left = 500
-    Top = 153
+    Left = 332
+    Top = 81
     ParamData = <
       item
         Name = 'CODIGO'
@@ -5432,8 +5587,8 @@ object FPedidos: TFPedidos
   object DsItens: TDataSource
     DataSet = QryItens
     OnStateChange = DsItensStateChange
-    Left = 556
-    Top = 153
+    Left = 388
+    Top = 89
   end
   object QryProdutos: TFDQuery
     Connection = DM.Connection
@@ -5443,12 +5598,12 @@ object FPedidos: TFPedidos
       '   PRODUTO_DESCRICAO '
       'FROM PRODUTOS '
       'ORDER BY PRODUTO_DESCRICAO')
-    Left = 364
-    Top = 161
+    Left = 412
+    Top = 41
   end
   object DsProdutos: TDataSource
     DataSet = QryProdutos
-    Left = 428
-    Top = 161
+    Left = 476
+    Top = 41
   end
 end

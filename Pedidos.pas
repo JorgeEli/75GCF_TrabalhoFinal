@@ -101,6 +101,15 @@ type
     QryListagemPEDIDO_VALOR_LIQUIDO: TFMTBCDField;
     QryListagemCLIENTE_CODIGO: TIntegerField;
     QryListagemCLIENTE_NOME: TStringField;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    DBEdit6: TDBEdit;
+    DBEdit7: TDBEdit;
+    DBEdit8: TDBEdit;
+    QryPedidosCLIENTE_DESCONTO_PADRAO: TFMTBCDField;
+    QryPedidosDESCONTO_PADRAO: TFMTBCDField;
+    QryPedidosTOTAL_DESCONTO: TFMTBCDField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EdPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure EdPesquisaEnter(Sender: TObject);
@@ -210,7 +219,6 @@ begin
     ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
     Open;
     Bruto    := FindField('BRUTO').AsFloat;
-    Total    := FindField('TOTAL').AsFloat;
     Desconto := FindField('DESCONTO').AsFloat;
     Close;
   end;
@@ -219,6 +227,7 @@ begin
   begin
     if not (State in [dsEdit, dsInsert]) then
       Edit;
+    Total    := Bruto - Desconto - (FindField('CLIENTE_DESCONTO_PADRAO').AsFloat * Bruto / 100);
     FindField('PEDIDO_VALOR_BRUTO').AsFloat    := Bruto;
     FindField('PEDIDO_VALOR_LIQUIDO').AsFloat  := Total;
     FindField('PEDIDO_VALOR_DESCONTO').AsFloat := Desconto;
@@ -227,6 +236,7 @@ begin
     else
       Findfield('PEDIDO_PERC_DESCONTO').AsFloat := 0;
     Post;
+    Refresh;
   end;
 
 end;
@@ -384,6 +394,8 @@ end;
 procedure TFPedidos.LkProdutoExit(Sender: TObject);
 begin
   LkProduto.Color := clWhite;
+  if (QryItens.State in [dsEdit, dsInsert]) then
+    QryItens.FindField('PEDIDO_VL_UNIT').AsFloat := QryProdutos.FindField('PRODUTO_PRECO_VENDA').AsFloat;
 end;
 
 procedure TFPedidos.ItemDescontoEnter(Sender: TObject);
@@ -579,6 +591,7 @@ begin
   QryItens.Close;
   QryItens.ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
   QryItens.Open();
+  AtualizarTotais;
 end;
 
 procedure TFPedidos.TabListagemShow(Sender: TObject);

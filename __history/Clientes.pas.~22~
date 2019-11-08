@@ -12,7 +12,7 @@ uses
 
 type
   TFClientes = class(TForm)
-    PageProdutos: TPageControl;
+    PageClientes: TPageControl;
     TabListagem: TTabSheet;
     DBGrid1: TDBGrid;
     Panel2: TPanel;
@@ -53,6 +53,8 @@ type
     EdUf: TDBEdit;
     QryClientes: TFDQuery;
     DsClientes: TDataSource;
+    EdCpf: TDBEdit;
+    Label3: TLabel;
     QryClientesCLIENTE_CODIGO: TIntegerField;
     QryClientesCLIENTE_NOME: TStringField;
     QryClientesCLIENTE_CPF: TStringField;
@@ -62,8 +64,10 @@ type
     QryClientesCLIENTE_CIDADE: TStringField;
     QryClientesCLIENTE_CEP: TStringField;
     QryClientesCLIENTE_UF: TStringField;
-    EdCpf: TDBEdit;
-    Label3: TLabel;
+    QryClientesCLIENTE_DESCONTO_PADRAO: TFMTBCDField;
+    GroupBox2: TGroupBox;
+    Label11: TLabel;
+    DescontoPadrao: TDBEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -75,10 +79,38 @@ type
     procedure BtSalvarClick(Sender: TObject);
     procedure BtNovoClick(Sender: TObject);
     procedure BtExcluirClick(Sender: TObject);
+    procedure BtCancelarClick(Sender: TObject);
+    procedure BtAtualizarClick(Sender: TObject);
+    procedure EdNomeEnter(Sender: TObject);
+    procedure EdNomeExit(Sender: TObject);
+    procedure EdCpfEnter(Sender: TObject);
+    procedure EdCpfExit(Sender: TObject);
+    procedure EdLogradouroEnter(Sender: TObject);
+    procedure EdLogradouroExit(Sender: TObject);
+    procedure EdNumeroEnter(Sender: TObject);
+    procedure EdNumeroExit(Sender: TObject);
+    procedure EdBairroEnter(Sender: TObject);
+    procedure EdBairroExit(Sender: TObject);
+    procedure EdCepEnter(Sender: TObject);
+    procedure EdCepExit(Sender: TObject);
+    procedure EdCidadeEnter(Sender: TObject);
+    procedure EdCidadeExit(Sender: TObject);
+    procedure EdUfEnter(Sender: TObject);
+    procedure EdUfExit(Sender: TObject);
+    procedure EdPesquisaEnter(Sender: TObject);
+    procedure EdPesquisaExit(Sender: TObject);
+    procedure BtListagemNovoClick(Sender: TObject);
+    procedure BtAtualizarListagemClick(Sender: TObject);
+    procedure TabListagemShow(Sender: TObject);
+    procedure BtPesquisarClick(Sender: TObject);
+    procedure DescontoPadraoKeyPress(Sender: TObject; var Key: Char);
+    procedure DescontoPadraoEnter(Sender: TObject);
+    procedure DescontoPadraoExit(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure PesquisaCliente;
   end;
 
 var
@@ -90,6 +122,31 @@ implementation
 {$R *.dfm}
 
 uses DataModule, Principal;
+
+procedure TFClientes.BtAtualizarClick(Sender: TObject);
+begin
+  if (QryClientes.State in [dsInactive]) then
+    QryClientes.Open;
+  QryClientes.Refresh;
+end;
+
+procedure TFClientes.BtAtualizarListagemClick(Sender: TObject);
+begin
+  if (QryListagem.State in [dsInactive]) then
+    QryListagem.Open();
+  QryListagem.Refresh;
+end;
+
+procedure TFClientes.BtCancelarClick(Sender: TObject);
+begin
+  if (QryClientes.State in [dsEdit]) then
+    QryClientes.Cancel;
+  if (QryClientes.State in [dsInsert]) then
+  begin
+    QryClientes.Cancel;
+    PageClientes.ActivePage := TabListagem;
+  end;
+end;
 
 procedure TFClientes.BtEditarClick(Sender: TObject);
 begin
@@ -104,7 +161,7 @@ begin
     if (Application.MessageBox('Excluir o registro?', 'Atenção...', MB_YESNO+MB_ICONQUESTION) = mrYes) then
     begin
       QryClientes.Delete;
-      PageProdutos.ActivePage := TabListagem;
+      PageClientes.ActivePage := TabListagem;
     end;
   end;
 end;
@@ -112,12 +169,24 @@ end;
 procedure TFClientes.BtLimparPesquisaClick(Sender: TObject);
 begin
   EdPesquisa.Text := '';
+  PesquisaCliente;
   EdPesquisa.SetFocus;
+end;
+
+procedure TFClientes.BtListagemNovoClick(Sender: TObject);
+begin
+  PageClientes.ActivePage := TabCadastro;
+  BtNovo.Click;
 end;
 
 procedure TFClientes.BtNovoClick(Sender: TObject);
 begin
   QryClientes.Append;
+end;
+
+procedure TFClientes.BtPesquisarClick(Sender: TObject);
+begin
+  PesquisaCliente;
 end;
 
 procedure TFClientes.BtSalvarClick(Sender: TObject);
@@ -194,9 +263,25 @@ begin
     end;
 end;
 
+procedure TFClientes.DescontoPadraoEnter(Sender: TObject);
+begin
+  DescontoPadrao.Color := clYellow;
+end;
+
+procedure TFClientes.DescontoPadraoExit(Sender: TObject);
+begin
+  DescontoPadrao := clWhite;
+end;
+
+procedure TFClientes.DescontoPadraoKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9']) then
+    key := #0;
+end;
+
 procedure TFClientes.DBGrid1DblClick(Sender: TObject);
 begin
-  PageProdutos.ActivePage := TabCadastro;
+  PageClientes.ActivePage := TabCadastro;
 end;
 
 procedure TFClientes.DsClientesStateChange(Sender: TObject);
@@ -209,22 +294,139 @@ begin
   BtAtualizar.Enabled := not (QryClientes.State in [dsEdit, dsInsert]);
 end;
 
+procedure TFClientes.EdBairroEnter(Sender: TObject);
+begin
+  EdBairro.Color := clYellow;
+end;
+
+procedure TFClientes.EdBairroExit(Sender: TObject);
+begin
+  EdBairro.Color := clWhite;
+end;
+
+procedure TFClientes.EdCepEnter(Sender: TObject);
+begin
+  EdCep.Color := clYellow;
+end;
+
+procedure TFClientes.EdCepExit(Sender: TObject);
+begin
+  EdCep.Color := clWhite;
+end;
+
+procedure TFClientes.EdCidadeEnter(Sender: TObject);
+begin
+  EdCidade.Color := clYellow;
+end;
+
+procedure TFClientes.EdCidadeExit(Sender: TObject);
+begin
+  EdCidade.Color := clWhite;
+end;
+
+procedure TFClientes.EdCpfEnter(Sender: TObject);
+begin
+  EdCpf.Color := clYellow;
+end;
+
+procedure TFClientes.EdCpfExit(Sender: TObject);
+begin
+  EdCpf.Color := clWhite;
+end;
+
+procedure TFClientes.EdLogradouroEnter(Sender: TObject);
+begin
+  EdLogradouro.Color := clYellow;
+end;
+
+procedure TFClientes.EdLogradouroExit(Sender: TObject);
+begin
+  EdLogradouro.Color := clWhite;
+end;
+
+procedure TFClientes.EdNomeEnter(Sender: TObject);
+begin
+  EdNome.Color := clYellow;
+end;
+
+procedure TFClientes.EdNomeExit(Sender: TObject);
+begin
+  EdNome.Color := clWhite;
+end;
+
+procedure TFClientes.EdNumeroEnter(Sender: TObject);
+begin
+  EdNumero.Color := clYellow;
+end;
+
+procedure TFClientes.EdNumeroExit(Sender: TObject);
+begin
+  EdNumero.Color := clWhite;
+end;
+
+procedure TFClientes.EdPesquisaEnter(Sender: TObject);
+begin
+  EdPesquisa.Color := clYellow;
+end;
+
+procedure TFClientes.EdPesquisaExit(Sender: TObject);
+begin
+  EdPesquisa.Color := clWhite;
+end;
+
+procedure TFClientes.EdUfEnter(Sender: TObject);
+begin
+  EdUf.Color := clYellow;
+end;
+
+procedure TFClientes.EdUfExit(Sender: TObject);
+begin
+  EdUf.Color := clWhite;
+end;
+
 procedure TFClientes.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   QryListagem.Close;
+  QryClientes.Close;
   action := caFree;
   FClientes := nil;
 end;
 
 procedure TFClientes.FormCreate(Sender: TObject);
 begin
-  PageProdutos.ActivePage := TabListagem;
+  PageClientes.ActivePage := TabListagem;
   SqlListagem := 'SELECT c.* FROM CLIENTES c ';
 end;
 
 procedure TFClientes.FormShow(Sender: TObject);
 begin
+  EdPesquisa.SetFocus;
   QryListagem.Open();
+end;
+
+procedure TFClientes.PesquisaCliente;
+  procedure Pesquisa(Tipo: SmallInt);
+  begin
+    QryListagem.Close;
+    QryListagem.SQL.Clear;
+    case Tipo of
+      0: QryListagem.SQL.Add(SqlListagem + ' WHERE c.CLIENTE_CODIGO = ' + EdPesquisa.Text + ' ORDER BY c.CLIENTE_CODIGO, c.CLIENTE_NOME');
+      1: QryListagem.SQL.Add(SqlListagem + ' WHERE c.CLIENTE_NOME LIKE ' + QuotedStr('%' + EdPesquisa.Text + '%') + ' ORDER BY c.CLIENTE_CODIGO, c.CLIENTE_NOME');
+      2: QryListagem.SQL.Add(SqlListagem + ' ORDER BY c.CLIENTE_CODIGO, c.CLIENTE_NOME');
+    end;
+    QryListagem.Open();
+  end;
+begin
+  if EdPesquisa.Text <> '' then
+  begin
+      try
+        Pesquisa(StrToInt(EdPesquisa.Text) * 0);
+       except
+        Pesquisa(1);
+      end;
+  end
+  else
+    Pesquisa(2);
 end;
 
 procedure TFClientes.TabCadastroShow(Sender: TObject);
@@ -233,6 +435,14 @@ begin
   QryClientes.ParamByName('CODIGO').AsInteger := QryListagem.FindField('CLIENTE_CODIGO').AsInteger;
   QryClientes.Open;
   EdNome.SetFocus;
+end;
+
+procedure TFClientes.TabListagemShow(Sender: TObject);
+begin
+  if (QryListagem.State in [dsInactive]) then
+    QryListagem.Open();
+  QryListagem.Refresh;
+  EdPesquisa.SetFocus;
 end;
 
 end.

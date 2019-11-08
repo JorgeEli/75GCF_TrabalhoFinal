@@ -81,6 +81,14 @@ object FProdutos: TFProdutos
             Title.Caption = 'FORNECEDOR'
             Width = 411
             Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'PRODUTO_PRECO_VENDA'
+            Title.Alignment = taCenter
+            Title.Caption = 'PRE'#199'O VENDA'
+            Width = 100
+            Visible = True
           end>
       end
       object Panel2: TPanel
@@ -924,7 +932,7 @@ object FProdutos: TFProdutos
         Left = 0
         Top = 0
         Width = 1000
-        Height = 169
+        Height = 113
         Align = alTop
         Color = clMoneyGreen
         ParentBackground = False
@@ -3011,13 +3019,49 @@ object FProdutos: TFProdutos
       end
       object Panel4: TPanel
         Left = 0
-        Top = 169
+        Top = 218
         Width = 1000
-        Height = 447
+        Height = 398
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 2
+        ExplicitLeft = -3
+        ExplicitTop = 224
+      end
+      object GroupBox1: TGroupBox
+        Left = 0
+        Top = 113
+        Width = 1000
+        Height = 105
+        Align = alTop
+        Caption = 'ADICIONAIS'
+        Color = clMoneyGreen
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 3
+        ExplicitLeft = 296
+        ExplicitTop = 152
+        ExplicitWidth = 185
+        object Label5: TLabel
+          Left = 11
+          Top = 40
+          Width = 79
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Pre'#231'o de venda:'
+        end
+        object PrecoVenda: TDBEdit
+          Left = 96
+          Top = 36
+          Width = 121
+          Height = 21
+          DataField = 'PRODUTO_PRECO_VENDA'
+          DataSource = DsProdutos
+          TabOrder = 0
+          OnEnter = PrecoVendaEnter
+          OnExit = PrecoVendaExit
+        end
       end
     end
   end
@@ -3036,6 +3080,28 @@ object FProdutos: TFProdutos
         ParamType = ptInput
         Value = Null
       end>
+    object QryProdutosPRODUTO_CODIGO: TIntegerField
+      FieldName = 'PRODUTO_CODIGO'
+      Origin = 'PRODUTO_CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QryProdutosPRODUTO_DESCRICAO: TStringField
+      FieldName = 'PRODUTO_DESCRICAO'
+      Origin = 'PRODUTO_DESCRICAO'
+      Size = 120
+    end
+    object QryProdutosFORNECEDOR_CODIGO: TIntegerField
+      FieldName = 'FORNECEDOR_CODIGO'
+      Origin = 'FORNECEDOR_CODIGO'
+    end
+    object QryProdutosPRODUTO_PRECO_VENDA: TFMTBCDField
+      FieldName = 'PRODUTO_PRECO_VENDA'
+      Origin = 'PRODUTO_PRECO_VENDA'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
   end
   object DsProdutos: TDataSource
     DataSet = QryProdutos
@@ -3062,6 +3128,36 @@ object FProdutos: TFProdutos
       'ORDER BY p.PRODUTO_CODIGO')
     Left = 636
     Top = 96
+    object QryListagemPRODUTO_CODIGO: TIntegerField
+      FieldName = 'PRODUTO_CODIGO'
+      Origin = 'PRODUTO_CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QryListagemPRODUTO_DESCRICAO: TStringField
+      FieldName = 'PRODUTO_DESCRICAO'
+      Origin = 'PRODUTO_DESCRICAO'
+      Size = 120
+    end
+    object QryListagemFORNECEDOR_CODIGO: TIntegerField
+      FieldName = 'FORNECEDOR_CODIGO'
+      Origin = 'FORNECEDOR_CODIGO'
+    end
+    object QryListagemPRODUTO_PRECO_VENDA: TFMTBCDField
+      FieldName = 'PRODUTO_PRECO_VENDA'
+      Origin = 'PRODUTO_PRECO_VENDA'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object QryListagemFORNECEDOR_NOME: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'FORNECEDOR_NOME'
+      Origin = 'FORNECEDOR_NOME'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 50
+    end
   end
   object QryFornecedores: TFDQuery
     Connection = DM.Connection

@@ -53,6 +53,8 @@ type
     EdUf: TDBEdit;
     QryClientes: TFDQuery;
     DsClientes: TDataSource;
+    EdCpf: TDBEdit;
+    Label3: TLabel;
     QryClientesCLIENTE_CODIGO: TIntegerField;
     QryClientesCLIENTE_NOME: TStringField;
     QryClientesCLIENTE_CPF: TStringField;
@@ -62,8 +64,10 @@ type
     QryClientesCLIENTE_CIDADE: TStringField;
     QryClientesCLIENTE_CEP: TStringField;
     QryClientesCLIENTE_UF: TStringField;
-    EdCpf: TDBEdit;
-    Label3: TLabel;
+    QryClientesCLIENTE_DESCONTO_PADRAO: TFMTBCDField;
+    GroupBox2: TGroupBox;
+    Label11: TLabel;
+    DescontoPadrao: TDBEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -99,6 +103,9 @@ type
     procedure BtAtualizarListagemClick(Sender: TObject);
     procedure TabListagemShow(Sender: TObject);
     procedure BtPesquisarClick(Sender: TObject);
+    procedure DescontoPadraoKeyPress(Sender: TObject; var Key: Char);
+    procedure DescontoPadraoEnter(Sender: TObject);
+    procedure DescontoPadraoExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -254,6 +261,22 @@ begin
       QryClientes.FindField('CLIENTE_CODIGO').AsInteger := Codigo;
       QryClientes.Post;
     end;
+end;
+
+procedure TFClientes.DescontoPadraoEnter(Sender: TObject);
+begin
+  DescontoPadrao.Color := clYellow;
+end;
+
+procedure TFClientes.DescontoPadraoExit(Sender: TObject);
+begin
+  DescontoPadrao.Color := clWhite;
+end;
+
+procedure TFClientes.DescontoPadraoKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9']) then
+    key := #0;
 end;
 
 procedure TFClientes.DBGrid1DblClick(Sender: TObject);

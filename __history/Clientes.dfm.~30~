@@ -1,7 +1,7 @@
-object FProdutos: TFProdutos
+object FClientes: TFClientes
   Left = 0
   Top = 0
-  Caption = 'Cadastro de Produtos'
+  Caption = 'Cadastro de Clientes'
   ClientHeight = 729
   ClientWidth = 1008
   Color = clBtnFace
@@ -13,13 +13,12 @@ object FProdutos: TFProdutos
   KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
-  WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object PageProdutos: TPageControl
+  object PageClientes: TPageControl
     Left = 0
     Top = 0
     Width = 1008
@@ -50,7 +49,7 @@ object FProdutos: TFProdutos
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 0
+        TabOrder = 1
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
         TitleFont.Height = -11
@@ -60,26 +59,86 @@ object FProdutos: TFProdutos
         Columns = <
           item
             Expanded = False
-            FieldName = 'PRODUTO_CODIGO'
+            FieldName = 'CLIENTE_CODIGO'
             Title.Alignment = taCenter
             Title.Caption = 'C'#211'DIGO'
-            Width = 69
+            Width = 70
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'PRODUTO_DESCRICAO'
+            FieldName = 'CLIENTE_NOME'
             Title.Alignment = taCenter
-            Title.Caption = 'DESCRI'#199#195'O'
-            Width = 664
+            Title.Caption = 'NOME'
+            Width = 500
+            Visible = True
+          end
+          item
+            Alignment = taCenter
+            Expanded = False
+            FieldName = 'CLIENTE_CPF'
+            Title.Alignment = taCenter
+            Title.Caption = 'CPF'
+            Width = 140
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'FORNECEDOR_NOME'
+            FieldName = 'CLIENTE_LOGRADOURO'
             Title.Alignment = taCenter
-            Title.Caption = 'FORNECEDOR'
-            Width = 411
+            Title.Caption = 'LOGRADOURO'
+            Width = 400
+            Visible = True
+          end
+          item
+            Alignment = taRightJustify
+            Expanded = False
+            FieldName = 'CLIENTE_ENDERECO_NUMERO'
+            Title.Alignment = taCenter
+            Title.Caption = 'N'#218'MERO'
+            Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CLIENTE_BAIRRO'
+            Title.Alignment = taCenter
+            Title.Caption = 'BAIRRO'
+            Width = 300
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CLIENTE_CIDADE'
+            Title.Alignment = taCenter
+            Title.Caption = 'CIDADE'
+            Width = 300
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CLIENTE_CEP'
+            Title.Alignment = taCenter
+            Title.Caption = 'CEP'
+            Width = 70
+            Visible = True
+          end
+          item
+            Alignment = taCenter
+            Expanded = False
+            FieldName = 'CLIENTE_UF'
+            Title.Alignment = taCenter
+            Title.Caption = 'UF'
+            Width = 20
+            Visible = True
+          end
+          item
+            Alignment = taRightJustify
+            Expanded = False
+            FieldName = 'CLIENTE_DESCONTO_PADRAO'
+            Title.Alignment = taCenter
+            Title.Caption = 'DESC. PADR'#195'O(%)'
+            Width = 80
             Visible = True
           end>
       end
@@ -91,13 +150,13 @@ object FProdutos: TFProdutos
         Align = alTop
         Color = clMoneyGreen
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 0
         object Label4: TLabel
           Left = 5
           Top = 105
-          Width = 256
+          Width = 229
           Height = 16
-          Caption = 'Pesquisa por c'#243'digo ou descri'#231#227'o do produto'
+          Caption = 'Pesquisa por c'#243'digo ou nome do Cliente'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -109,7 +168,7 @@ object FProdutos: TFProdutos
           Left = 3
           Top = 126
           Width = 286
-          Height = 28
+          Height = 27
           CharCase = ecUpperCase
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -126,7 +185,7 @@ object FProdutos: TFProdutos
           Top = 124
           Width = 30
           Height = 30
-          Hint = 'Clique para pesquisar o produto.'
+          Hint = 'Clique para pesquisar o Cliente.'
           Glyph.Data = {
             FE0A0000424DFE0A00000000000036000000280000001E0000001E0000000100
             180000000000C80A0000C40E0000C40E00000000000000000000FFFFFFFFFFFF
@@ -301,7 +360,7 @@ object FProdutos: TFProdutos
           Top = 8
           Width = 100
           Height = 90
-          Hint = 'Clique aqui para fazer um  novo cadastro de produto.'
+          Hint = 'Clique aqui para  fazer um novo cadastro de Clientes'
           Caption = 'Novo'
           Glyph.Data = {
             662A0000424D662A00000000000036000000280000003C0000003C0000000100
@@ -655,7 +714,7 @@ object FProdutos: TFProdutos
           Top = 9
           Width = 100
           Height = 90
-          Hint = 'Clique aqui para fazer um  novo cadastro de produto.'
+          Hint = 'Clique aqui para atualizar os Clientees.'
           Caption = 'Atualizar'
           Glyph.Data = {
             E61D0000424DE61D000000000000360000002800000032000000320000000100
@@ -924,7 +983,7 @@ object FProdutos: TFProdutos
         Left = 0
         Top = 0
         Width = 1000
-        Height = 169
+        Height = 105
         Align = alTop
         Color = clMoneyGreen
         ParentBackground = False
@@ -944,47 +1003,45 @@ object FProdutos: TFProdutos
           Caption = 'Nome:'
         end
         object Label3: TLabel
-          Left = 10
-          Top = 80
-          Width = 59
+          Left = 46
+          Top = 78
+          Width = 23
           Height = 13
-          Caption = 'Fornecedor:'
+          Caption = 'CPF:'
         end
-        object EdProdutoCodigo: TDBEdit
+        object EdCodigo: TDBEdit
           Left = 75
           Top = 21
           Width = 62
           Height = 21
-          DataField = 'PRODUTO_CODIGO'
-          DataSource = DsProdutos
+          DataField = 'CLIENTE_CODIGO'
+          DataSource = DsClientes
           Enabled = False
           TabOrder = 0
         end
-        object EdProdutoDescricao: TDBEdit
+        object EdNome: TDBEdit
           Left = 75
           Top = 48
           Width = 414
           Height = 21
           CharCase = ecUpperCase
-          DataField = 'PRODUTO_DESCRICAO'
-          DataSource = DsProdutos
+          DataField = 'CLIENTE_NOME'
+          DataSource = DsClientes
           TabOrder = 1
-          OnEnter = EdProdutoDescricaoEnter
-          OnExit = EdProdutoDescricaoExit
+          OnEnter = EdNomeEnter
+          OnExit = EdNomeExit
         end
-        object LkFornecedor: TDBLookupComboBox
+        object EdCpf: TDBEdit
           Left = 75
           Top = 75
-          Width = 414
+          Width = 86
           Height = 21
-          DataField = 'FORNECEDOR_CODIGO'
-          DataSource = DsProdutos
-          KeyField = 'FORNECEDOR_CODIGO'
-          ListField = 'FORNECEDOR_NOME'
-          ListSource = DsFornecedores
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_CPF'
+          DataSource = DsClientes
           TabOrder = 2
-          OnEnter = LkFornecedorEnter
-          OnExit = LkFornecedorExit
+          OnEnter = EdCpfEnter
+          OnExit = EdCpfExit
         end
       end
       object TPanel
@@ -1001,6 +1058,7 @@ object FProdutos: TFProdutos
           Top = 1
           Width = 136
           Height = 83
+          Hint = 'Clique para excluir o registro.'
           Align = alLeft
           Caption = 'Excluir'
           Glyph.Data = {
@@ -1345,15 +1403,17 @@ object FProdutos: TFProdutos
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             FFFFFFFFFFFFFFFFFFFF}
           Layout = blGlyphTop
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
           OnClick = BtExcluirClick
-          ExplicitHeight = 70
         end
         object BtCancelar: TBitBtn
           Left = 403
           Top = 1
           Width = 136
           Height = 83
+          Hint = 'Clique para cancelar a edi'#231#227'o/inclus'#227'o do registro.'
           Align = alLeft
           Caption = 'Cancelar'
           Glyph.Data = {
@@ -1698,16 +1758,17 @@ object FProdutos: TFProdutos
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             FFFFFFFFFFFFFFFFFFFF}
           Layout = blGlyphTop
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 3
           OnClick = BtCancelarClick
-          ExplicitLeft = 267
-          ExplicitHeight = 70
         end
         object BtEditar: TBitBtn
           Left = 267
           Top = 1
           Width = 136
           Height = 83
+          Hint = 'Clique para editar o registro'
           Align = alLeft
           Caption = 'Editar'
           Glyph.Data = {
@@ -2052,16 +2113,17 @@ object FProdutos: TFProdutos
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             FFFFFFFFFFFFFFFFFFFF}
           Layout = blGlyphTop
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 2
           OnClick = BtEditarClick
-          ExplicitLeft = 251
-          ExplicitHeight = 70
         end
         object BtSalvar: TBitBtn
           Left = 539
           Top = 1
           Width = 136
           Height = 83
+          Hint = 'Clique para salvar o registro.'
           Align = alLeft
           Caption = 'Salvar'
           Glyph.Data = {
@@ -2406,10 +2468,10 @@ object FProdutos: TFProdutos
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             FFFFFFFFFFFFFFFFFFFF}
           Layout = blGlyphTop
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 4
           OnClick = BtSalvarClick
-          ExplicitLeft = 675
-          ExplicitHeight = 70
         end
         object BtNovo: TBitBtn
           Left = 1
@@ -2760,9 +2822,10 @@ object FProdutos: TFProdutos
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             FFFFFFFFFFFFFFFFFFFF}
           Layout = blGlyphTop
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           OnClick = BtNovoClick
-          ExplicitHeight = 70
         end
         object BtAtualizar: TBitBtn
           Left = 675
@@ -3013,34 +3076,208 @@ object FProdutos: TFProdutos
             FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             FFFFFFFFFFFFFFFF0000}
           Layout = blGlyphTop
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 5
           OnClick = BtAtualizarClick
-          ExplicitLeft = 691
-          ExplicitTop = -7
-          ExplicitHeight = 70
         end
       end
       object Panel4: TPanel
         Left = 0
-        Top = 169
+        Top = 321
         Width = 1000
-        Height = 447
+        Height = 295
         Align = alClient
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 2
-        ExplicitHeight = 460
+        ExplicitTop = 336
+        ExplicitHeight = 280
+      end
+      object GroupBox1: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1000
+        Height = 120
+        Align = alTop
+        Caption = 'ENDERE'#199'O'
+        Color = clMoneyGreen
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 3
+        object Label5: TLabel
+          Left = 10
+          Top = 32
+          Width = 59
+          Height = 13
+          Caption = 'Logradouro:'
+        end
+        object Label6: TLabel
+          Left = 500
+          Top = 32
+          Width = 41
+          Height = 13
+          Caption = 'N'#250'mero:'
+        end
+        object Label7: TLabel
+          Left = 37
+          Top = 58
+          Width = 32
+          Height = 13
+          Caption = 'Bairro:'
+        end
+        object Label8: TLabel
+          Left = 32
+          Top = 85
+          Width = 37
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Cidade:'
+        end
+        object Label9: TLabel
+          Left = 518
+          Top = 59
+          Width = 23
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'CEP:'
+        end
+        object Label10: TLabel
+          Left = 524
+          Top = 86
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'UF:'
+        end
+        object EdLogradouro: TDBEdit
+          Left = 75
+          Top = 27
+          Width = 414
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_LOGRADOURO'
+          DataSource = DsClientes
+          TabOrder = 0
+          OnEnter = EdLogradouroEnter
+          OnExit = EdLogradouroExit
+        end
+        object EdNumero: TDBEdit
+          Left = 549
+          Top = 27
+          Width = 65
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_ENDERECO_NUMERO'
+          DataSource = DsClientes
+          TabOrder = 1
+          OnEnter = EdNumeroEnter
+          OnExit = EdNumeroExit
+        end
+        object EdBairro: TDBEdit
+          Left = 75
+          Top = 54
+          Width = 414
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_BAIRRO'
+          DataSource = DsClientes
+          TabOrder = 2
+          OnEnter = EdBairroEnter
+          OnExit = EdBairroExit
+        end
+        object EdCidade: TDBEdit
+          Left = 75
+          Top = 81
+          Width = 414
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_CIDADE'
+          DataSource = DsClientes
+          TabOrder = 4
+          OnEnter = EdCidadeEnter
+          OnExit = EdCidadeExit
+        end
+        object EdCep: TDBEdit
+          Left = 549
+          Top = 54
+          Width = 65
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_CEP'
+          DataSource = DsClientes
+          TabOrder = 3
+          OnEnter = EdCepEnter
+          OnExit = EdCepExit
+        end
+        object EdUf: TDBEdit
+          Left = 549
+          Top = 81
+          Width = 65
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'CLIENTE_UF'
+          DataSource = DsClientes
+          TabOrder = 5
+          OnEnter = EdUfEnter
+          OnExit = EdUfExit
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 0
+        Top = 225
+        Width = 1000
+        Height = 96
+        Align = alTop
+        Caption = 'ADICIONAIS'
+        Color = clMoneyGreen
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 4
+        object Label11: TLabel
+          Left = 46
+          Top = 56
+          Width = 105
+          Height = 13
+          Caption = 'Desconto padr'#227'o(%):'
+        end
+        object DescontoPadrao: TDBEdit
+          Left = 159
+          Top = 53
+          Width = 121
+          Height = 21
+          DataField = 'CLIENTE_DESCONTO_PADRAO'
+          DataSource = DsClientes
+          TabOrder = 0
+          OnEnter = DescontoPadraoEnter
+          OnExit = DescontoPadraoExit
+          OnKeyPress = DescontoPadraoKeyPress
+        end
       end
     end
   end
-  object QryProdutos: TFDQuery
-    MasterSource = DsListagem
+  object QryListagem: TFDQuery
     Connection = DM.Connection
     SQL.Strings = (
-      'SELECT * FROM PRODUTOS'
-      'WHERE PRODUTO_CODIGO = :CODIGO')
-    Left = 636
-    Top = 32
+      'SELECT * FROM CLIENTES'
+      'ORDER BY CLIENTE_CODIGO, CLIENTE_NOME')
+    Left = 540
+    Top = 272
+  end
+  object DsListagem: TDataSource
+    DataSet = QryListagem
+    Left = 604
+    Top = 272
+  end
+  object QryClientes: TFDQuery
+    Connection = DM.Connection
+    SQL.Strings = (
+      'SELECT c.* FROM CLIENTES c'
+      'WHERE c.CLIENTE_CODIGO = :CODIGO'
+      'ORDER BY CLIENTE_CODIGO, CLIENTE_NOME'
+      '')
+    Left = 540
+    Top = 329
     ParamData = <
       item
         Name = 'CODIGO'
@@ -3048,44 +3285,63 @@ object FProdutos: TFProdutos
         ParamType = ptInput
         Value = Null
       end>
+    object QryClientesCLIENTE_CODIGO: TIntegerField
+      FieldName = 'CLIENTE_CODIGO'
+      Origin = 'CLIENTE_CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QryClientesCLIENTE_NOME: TStringField
+      FieldName = 'CLIENTE_NOME'
+      Origin = 'CLIENTE_NOME'
+      Size = 60
+    end
+    object QryClientesCLIENTE_CPF: TStringField
+      FieldName = 'CLIENTE_CPF'
+      Origin = 'CLIENTE_CPF'
+      Size = 18
+    end
+    object QryClientesCLIENTE_LOGRADOURO: TStringField
+      FieldName = 'CLIENTE_LOGRADOURO'
+      Origin = 'CLIENTE_LOGRADOURO'
+      Size = 50
+    end
+    object QryClientesCLIENTE_ENDERECO_NUMERO: TStringField
+      FieldName = 'CLIENTE_ENDERECO_NUMERO'
+      Origin = 'CLIENTE_ENDERECO_NUMERO'
+      Size = 10
+    end
+    object QryClientesCLIENTE_BAIRRO: TStringField
+      FieldName = 'CLIENTE_BAIRRO'
+      Origin = 'CLIENTE_BAIRRO'
+      Size = 50
+    end
+    object QryClientesCLIENTE_CIDADE: TStringField
+      FieldName = 'CLIENTE_CIDADE'
+      Origin = 'CLIENTE_CIDADE'
+      Size = 60
+    end
+    object QryClientesCLIENTE_CEP: TStringField
+      FieldName = 'CLIENTE_CEP'
+      Origin = 'CLIENTE_CEP'
+      Size = 10
+    end
+    object QryClientesCLIENTE_UF: TStringField
+      FieldName = 'CLIENTE_UF'
+      Origin = 'CLIENTE_UF'
+      Size = 2
+    end
+    object QryClientesCLIENTE_DESCONTO_PADRAO: TFMTBCDField
+      FieldName = 'CLIENTE_DESCONTO_PADRAO'
+      Origin = 'CLIENTE_DESCONTO_PADRAO'
+      Precision = 18
+      Size = 6
+    end
   end
-  object DsProdutos: TDataSource
-    DataSet = QryProdutos
-    OnStateChange = DsProdutosStateChange
-    Left = 700
-    Top = 32
-  end
-  object DsListagem: TDataSource
-    DataSet = QryListagem
-    Left = 700
-    Top = 96
-  end
-  object QryListagem: TFDQuery
-    Connection = DM.Connection
-    SQL.Strings = (
-      'SELECT '
-      '   '
-      '   p.*,'
-      '   f.FORNECEDOR_NOME'
-      'FROM PRODUTOS p '
-      
-        'LEFT OUTER JOIN FORNECEDORES f ON f.FORNECEDOR_CODIGO = p.FORNEC' +
-        'EDOR_CODIGO'
-      'ORDER BY p.PRODUTO_CODIGO')
-    Left = 636
-    Top = 96
-  end
-  object QryFornecedores: TFDQuery
-    Connection = DM.Connection
-    SQL.Strings = (
-      'Select * From Fornecedores'
-      'ORDER BY FORNECEDOR_NOME')
-    Left = 628
-    Top = 152
-  end
-  object DsFornecedores: TDataSource
-    DataSet = QryFornecedores
-    Left = 708
-    Top = 152
+  object DsClientes: TDataSource
+    DataSet = QryClientes
+    OnStateChange = DsClientesStateChange
+    Left = 604
+    Top = 329
   end
 end

@@ -53,9 +53,6 @@ type
     QryListagemFORNECEDOR_CODIGO: TIntegerField;
     QryListagemPRODUTO_PRECO_VENDA: TFMTBCDField;
     QryListagemFORNECEDOR_NOME: TStringField;
-    GroupBox1: TGroupBox;
-    Label5: TLabel;
-    PrecoVenda: TDBEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure BtNovoClick(Sender: TObject);
@@ -79,8 +76,6 @@ type
     procedure LkFornecedorEnter(Sender: TObject);
     procedure LkFornecedorExit(Sender: TObject);
     procedure BtAtualizarListagemClick(Sender: TObject);
-    procedure PrecoVendaEnter(Sender: TObject);
-    procedure PrecoVendaExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -291,16 +286,6 @@ begin
   end
   else
     Pesquisa(2);
-end;
-
-procedure TFProdutos.PrecoVendaEnter(Sender: TObject);
-begin
-  PrecoVenda.Color := clYellow;
-end;
-
-procedure TFProdutos.PrecoVendaExit(Sender: TObject);
-begin
-  PrecoVenda.Color := clWhite;
 end;
 
 procedure TFProdutos.TabCadastroShow(Sender: TObject);
