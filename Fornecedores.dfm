@@ -101,7 +101,7 @@ object FFornecedor: TFFornecedor
           Left = 3
           Top = 126
           Width = 286
-          Height = 28
+          Height = 27
           CharCase = ecUpperCase
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -906,6 +906,10 @@ object FFornecedor: TFFornecedor
       Caption = 'Cadastro'
       ImageIndex = 1
       OnShow = TabCadastroShow
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0

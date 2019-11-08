@@ -8002,6 +8002,7 @@ object FPrincipal: TFPrincipal
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
+        OnClick = BtPedidosClick
       end
     end
   end

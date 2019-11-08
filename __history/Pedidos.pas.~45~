@@ -1,0 +1,574 @@
+unit Pedidos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.DBCtrls, Vcl.Mask;
+
+type
+  TFPedidos = class(TForm)
+    QryListagem: TFDQuery;
+    DsListagem: TDataSource;
+    QryPedidos: TFDQuery;
+    DsPedidos: TDataSource;
+    PagePedidos: TPageControl;
+    TabListagem: TTabSheet;
+    Panel2: TPanel;
+    Label4: TLabel;
+    EdPesquisa: TEdit;
+    BtPesquisar: TBitBtn;
+    BtLimparPesquisa: TBitBtn;
+    BtListagemNovo: TBitBtn;
+    BtAtualizarListagem: TBitBtn;
+    TabCadastro: TTabSheet;
+    BtExcluir: TBitBtn;
+    BtCancelar: TBitBtn;
+    BtEditar: TBitBtn;
+    BtSalvar: TBitBtn;
+    BtNovo: TBitBtn;
+    BtAtualizar: TBitBtn;
+    Panel5: TPanel;
+    DBGrid1: TDBGrid;
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    EdCodigo: TDBEdit;
+    DBEdit1: TDBEdit;
+    LkClientes: TDBLookupComboBox;
+    QryClientes: TFDQuery;
+    DsClientes: TDataSource;
+    GroupBox1: TGroupBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    DBGrid2: TDBGrid;
+    QryItens: TFDQuery;
+    DsItens: TDataSource;
+    GroupBox3: TGroupBox;
+    Panel3: TPanel;
+    BtItemNovo: TBitBtn;
+    BtItemExcluir: TBitBtn;
+    BtItemEditar: TBitBtn;
+    BtItemCancelar: TBitBtn;
+    BtItemSalvar: TBitBtn;
+    ItemQtde: TDBEdit;
+    LkProduto: TDBLookupComboBox;
+    ItemValor: TDBEdit;
+    ItemPercDesconto: TDBEdit;
+    ItemDesconto: TDBEdit;
+    ItemTotal: TDBEdit;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    QryItensPEDIDO_CODIGO: TIntegerField;
+    QryItensPEDIDO_ITEM: TSmallintField;
+    QryItensPEDIDO_QTDE: TFMTBCDField;
+    QryItensPEDIDO_VL_UNIT: TFMTBCDField;
+    QryItensPEDIDO_VL_TOTAL_ITEM: TFMTBCDField;
+    QryItensPEDIDO_PERC_DESCONTO_ITEM: TFMTBCDField;
+    QryItensPEDIDO_VL_DESCONTO_ITEM: TFMTBCDField;
+    QryItensPRODUTO_CODIGO: TIntegerField;
+    QryItensPRODUTO_DESCRICAO: TStringField;
+    QryProdutos: TFDQuery;
+    DsProdutos: TDataSource;
+    QryItensPEDIDO_TOTAL_BRUTO_ITEM: TFMTBCDField;
+    QryPedidosPEDIDO_CODIGO: TIntegerField;
+    QryPedidosPEDIDO_DATA: TDateField;
+    QryPedidosPEDIDO_VALOR_BRUTO: TFMTBCDField;
+    QryPedidosPEDIDO_VALOR_DESCONTO: TFMTBCDField;
+    QryPedidosPEDIDO_PERC_DESCONTO: TFMTBCDField;
+    QryPedidosPEDIDO_VALOR_LIQUIDO: TFMTBCDField;
+    QryPedidosCLIENTE_CODIGO: TIntegerField;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    QryListagemPEDIDO_CODIGO: TIntegerField;
+    QryListagemPEDIDO_DATA: TDateField;
+    QryListagemPEDIDO_VALOR_BRUTO: TFMTBCDField;
+    QryListagemPEDIDO_VALOR_DESCONTO: TFMTBCDField;
+    QryListagemPEDIDO_PERC_DESCONTO: TFMTBCDField;
+    QryListagemPEDIDO_VALOR_LIQUIDO: TFMTBCDField;
+    QryListagemCLIENTE_CODIGO: TIntegerField;
+    QryListagemCLIENTE_NOME: TStringField;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure EdPesquisaKeyPress(Sender: TObject; var Key: Char);
+    procedure EdPesquisaEnter(Sender: TObject);
+    procedure EdPesquisaExit(Sender: TObject);
+    procedure TabListagemShow(Sender: TObject);
+    procedure BtPesquisarClick(Sender: TObject);
+    procedure BtLimparPesquisaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BtAtualizarListagemClick(Sender: TObject);
+    procedure BtListagemNovoClick(Sender: TObject);
+    procedure LkClientesEnter(Sender: TObject);
+    procedure LkClientesExit(Sender: TObject);
+    procedure DsPedidosStateChange(Sender: TObject);
+    procedure BtNovoClick(Sender: TObject);
+    procedure BtExcluirClick(Sender: TObject);
+    procedure BtEditarClick(Sender: TObject);
+    procedure BtCancelarClick(Sender: TObject);
+    procedure BtAtualizarClick(Sender: TObject);
+    procedure BtSalvarClick(Sender: TObject);
+    procedure TabCadastroShow(Sender: TObject);
+    procedure DsItensStateChange(Sender: TObject);
+    procedure BtItemNovoClick(Sender: TObject);
+    procedure LkProdutoEnter(Sender: TObject);
+    procedure LkProdutoExit(Sender: TObject);
+    procedure BtItemExcluirClick(Sender: TObject);
+    procedure BtItemEditarClick(Sender: TObject);
+    procedure BtItemCancelarClick(Sender: TObject);
+    procedure BtItemSalvarClick(Sender: TObject);
+    procedure QryItensNewRecord(DataSet: TDataSet);
+    procedure ItemQtdeExit(Sender: TObject);
+    procedure ItemValorExit(Sender: TObject);
+    procedure ItemPercDescontoExit(Sender: TObject);
+    procedure ItemQtdeEnter(Sender: TObject);
+    procedure ItemValorEnter(Sender: TObject);
+    procedure ItemPercDescontoEnter(Sender: TObject);
+    procedure ItemDescontoEnter(Sender: TObject);
+    procedure ItemDescontoExit(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure QryItensAfterPost(DataSet: TDataSet);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure PesquisaPedido;
+    procedure AtualizaQtdeVlUnit;
+    procedure AtualizaDescontoItem;
+    procedure AtualizarTotais;
+  end;
+
+var
+  FPedidos: TFPedidos;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModule, Principal;
+
+procedure TFPedidos.AtualizaDescontoItem;
+  var
+    Desconto, Percentual, Qtde, Valor: Double;
+begin
+  Desconto := QryItens.FindField('PEDIDO_VL_DESCONTO_ITEM').AsFloat;
+  Qtde     := QryItens.FindField('PEDIDO_QTDE').AsFloat;
+  Valor    := QryItens.FindField('PEDIDO_VL_UNIT').AsFloat;
+  if Desconto > (Qtde * Valor) then
+  begin
+    ItemDesconto.SetFocus;
+    Application.MessageBox('O desconto não pode ser maior do que o valor total.', 'Atenção...', MB_ICONERROR);
+    Abort;
+  end;
+  if (Qtde * Valor) > 0 then
+    Percentual := (Desconto * 100) / (Qtde * Valor)
+  else
+    Percentual := 0;
+  QryItens.FindField('PEDIDO_PERC_DESCONTO_ITEM').AsFloat := Percentual;
+  QryItens.FindField('PEDIDO_VL_TOTAL_ITEM').AsFloat := (Qtde * Valor) - Desconto;
+end;
+
+procedure TFPedidos.AtualizaQtdeVlUnit;
+begin
+  if (QryItens.State in [dsEdit, dsInsert]) then
+  begin
+    QryItens.FindField('PEDIDO_VL_DESCONTO_ITEM').AsFloat := QryItens.FindField('PEDIDO_PERC_DESCONTO_ITEM').AsFloat * QryItens.FindField('PEDIDO_QTDE').AsFloat * QryItens.FindField('PEDIDO_VL_UNIT').AsFloat / 100;
+    QryItens.FindField('PEDIDO_TOTAL_BRUTO_ITEM').AsFloat := QryItens.FindField('PEDIDO_QTDE').AsFloat * QryItens.FindField('PEDIDO_VL_UNIT').AsFloat;
+    QryItens.FindField('PEDIDO_VL_TOTAL_ITEM').AsFloat    := QryItens.FindField('PEDIDO_QTDE').AsFloat * QryItens.FindField('PEDIDO_VL_UNIT').AsFloat - QryItens.FindField('PEDIDO_VL_DESCONTO_ITEM').AsFloat;
+  end;
+end;
+
+procedure TFPedidos.AtualizarTotais;
+  var
+    QryLocal: TFDQuery;
+    Bruto, Total, Desconto: Double;
+begin
+  QryLocal := TFDQuery.Create(nil);
+  with QryLocal do
+  begin
+    Connection := DM.Connection;
+    Transaction := DM.Transaction;
+    Sql.Add('SELECT SUM(PEDIDO_TOTAL_BRUTO_ITEM) AS BRUTO, ' +
+            'SUM(PEDIDO_VL_TOTAL_ITEM) AS TOTAL, ' +
+            'SUM(PEDIDO_VL_DESCONTO_ITEM) AS DESCONTO ' +
+            'FROM PEDIDO_ITENS WHERE PEDIDO_CODIGO = :CODIGO');
+    ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
+    Open;
+    Bruto    := FindField('BRUTO').AsFloat;
+    Total    := FindField('TOTAL').AsFloat;
+    Desconto := FindField('DESCONTO').AsFloat;
+    Close;
+  end;
+  FreeAndNil(QryLocal);
+  with QryPedidos do
+  begin
+    if not (State in [dsEdit, dsInsert]) then
+      Edit;
+    FindField('PEDIDO_VALOR_BRUTO').AsFloat    := Bruto;
+    FindField('PEDIDO_VALOR_LIQUIDO').AsFloat  := Total;
+    FindField('PEDIDO_VALOR_DESCONTO').AsFloat := Desconto;
+    if Bruto > 0 then
+      FindField('PEDIDO_PERC_DESCONTO').AsFloat := Desconto * 100 / Bruto
+    else
+      Findfield('PEDIDO_PERC_DESCONTO').AsFloat := 0;
+    Post;
+  end;
+
+end;
+
+procedure TFPedidos.BtAtualizarClick(Sender: TObject);
+begin
+  if (QryPedidos.State in [dsInactive]) then
+    QryPedidos.Open();
+  QryPedidos.Refresh;
+end;
+
+procedure TFPedidos.BtAtualizarListagemClick(Sender: TObject);
+begin
+  if (QryListagem.State in [dsInactive]) then
+    QryListagem.Open();
+  QryListagem.Refresh;
+end;
+
+procedure TFPedidos.BtCancelarClick(Sender: TObject);
+begin
+  if (QryPedidos.State in [dsEdit]) then
+    QryPedidos.Cancel;
+  if (QryPedidos.State in [dsInsert]) then
+  begin
+    QryPedidos.Cancel;
+    PagePedidos.ActivePage := TabListagem;
+  end;
+end;
+
+procedure TFPedidos.BtEditarClick(Sender: TObject);
+begin
+  if QryPedidos.RecordCount > 0 then
+    QryPedidos.Edit;
+end;
+
+procedure TFPedidos.BtExcluirClick(Sender: TObject);
+  var
+    QryLocal: TFDQuery;
+begin
+  if QryPedidos.RecordCount > 0 then
+  begin
+    if (Application.MessageBox('Excluir o registro?', 'Atenção...', MB_YESNO+MB_ICONQUESTION) = mrYes) then
+    begin
+      QryLocal := TFDQuery.Create(nil);
+      with QryLocal do
+      begin
+        Connection  := DM.Connection;
+        Transaction := DM.Transaction;
+        Sql.Add('DELETE FROM PEDIDO_ITENS WHERE PEDIDO_CODIGO = :CODIGO');
+        ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
+        ExecSql;
+        Close;
+      end;
+      FreeAndNil(QryLocal);
+      QryPedidos.Delete;
+      PagePedidos.ActivePage := TabListagem;
+    end;
+  end;
+end;
+
+procedure TFPedidos.BtItemCancelarClick(Sender: TObject);
+begin
+  if (QryItens.State in [dsEdit, dsInsert]) then
+    QryItens.Cancel;
+end;
+
+procedure TFPedidos.BtItemEditarClick(Sender: TObject);
+begin
+  if QryItens.RecordCount > 0 then
+    QryItens.Edit;
+end;
+
+procedure TFPedidos.BtItemExcluirClick(Sender: TObject);
+begin
+  if QryItens.RecordCount > 0 then
+  begin
+    if (Application.MessageBox('Excluir o registro?', 'Atenção...', MB_YESNO+MB_ICONQUESTION) = mrYes) then
+      QryItens.Delete;
+  end;
+end;
+
+procedure TFPedidos.BtItemNovoClick(Sender: TObject);
+begin
+  if (QryPedidos.State in [dsEdit, dsInsert]) then
+    BtSalvar.Click;
+  QryItens.Append;
+end;
+
+procedure TFPedidos.BtItemSalvarClick(Sender: TObject);
+begin
+  if (QryItens.State in [dsEdit, dsInsert]) then
+    QryItens.Post;
+end;
+
+procedure TFPedidos.BtLimparPesquisaClick(Sender: TObject);
+begin
+  EdPesquisa.Text := '';
+  EdPesquisa.SetFocus;
+  PesquisaPedido;
+end;
+
+procedure TFPedidos.BtListagemNovoClick(Sender: TObject);
+begin
+  PagePedidos.ActivePage := TabCadastro;
+  BtNovo.Click;
+end;
+
+procedure TFPedidos.BtNovoClick(Sender: TObject);
+begin
+  QryPedidos.Append;
+end;
+
+procedure TFPedidos.BtPesquisarClick(Sender: TObject);
+begin
+  PesquisaPedido;
+end;
+
+procedure TFPedidos.BtSalvarClick(Sender: TObject);
+  var
+    QryLocal: TFDQuery;
+    Codigo: Integer;
+begin
+  if (QryPedidos.State in [dsEdit]) then
+    QryPedidos.Post;
+  if (QryPedidos.State in [dsInsert]) then
+  begin
+    if LkClientes.Text = '' then
+    begin
+    LkClientes.SetFocus;
+    Application.MessageBox('Insira um cliente.', 'Atenção...', MB_ICONERROR);
+    Abort;
+    end;
+    QryLocal := TFDQuery.Create(nil);
+    with QryLocal do
+    begin
+      Connection  := DM.Connection;
+      Transaction := DM.Transaction;
+      Sql.Add('SELECT COALESCE(MAX(PEDIDO_CODIGO),0) + 1 AS CODIGO FROM PEDIDOS');
+      Open;
+      Codigo := FindField('CODIGO').AsInteger;
+      Close;
+    end;
+    FreeAndNil(QryLocal);
+    QryPedidos.FindField('PEDIDO_CODIGO').AsInteger := Codigo;
+    QryPedidos.FindField('PEDIDO_DATA').AsDateTime  := Now;
+    QryPedidos.Post;
+  end;
+end;
+
+procedure TFPedidos.LkProdutoEnter(Sender: TObject);
+begin
+  LkProduto.Color := clYellow;
+end;
+
+procedure TFPedidos.LkProdutoExit(Sender: TObject);
+begin
+  LkProduto.Color := clWhite;
+end;
+
+procedure TFPedidos.ItemDescontoEnter(Sender: TObject);
+begin
+  ItemDesconto.Color := clYellow;
+end;
+
+procedure TFPedidos.ItemDescontoExit(Sender: TObject);
+begin
+  ItemDesconto.Color := clWhite;
+  AtualizaDescontoItem;
+end;
+
+procedure TFPedidos.ItemPercDescontoEnter(Sender: TObject);
+begin
+  ItemPercDesconto.Color := clYellow;
+end;
+
+procedure TFPedidos.ItemPercDescontoExit(Sender: TObject);
+begin
+  ItemPercDesconto.Color := clWhite;
+  AtualizaQtdeVlUnit;
+end;
+
+procedure TFPedidos.ItemQtdeEnter(Sender: TObject);
+begin
+  ItemQtde.Color := clYellow;
+end;
+
+procedure TFPedidos.ItemQtdeExit(Sender: TObject);
+begin
+  ItemQtde.Color := clWhite;
+  AtualizaQtdeVlUnit;
+end;
+
+procedure TFPedidos.ItemValorEnter(Sender: TObject);
+begin
+  ItemValor.Color := clYellow;
+end;
+
+procedure TFPedidos.ItemValorExit(Sender: TObject);
+begin
+  ItemValor.Color := clWhite;
+  AtualizaQtdeVlUnit;
+end;
+
+procedure TFPedidos.DBGrid1DblClick(Sender: TObject);
+begin
+  PagePedidos.ActivePage := TabCadastro;
+end;
+
+procedure TFPedidos.DsItensStateChange(Sender: TObject);
+begin
+  BtItemSalvar.Enabled    := (QryItens.State in [dsEdit, dsInsert]) and (QryPedidos.RecordCount > 0);
+  BtItemCancelar.Enabled  := (QryItens.State in [dsEdit, dsInsert]) and (QryPedidos.RecordCount > 0);
+  BtItemNovo.Enabled      := not (QryItens.State in [dsEdit, dsInsert]) and (QryPedidos.RecordCount > 0);
+  BtItemEditar.Enabled    := not (QryItens.State in [dsEdit, dsInsert]) and (QryPedidos.RecordCount > 0);
+  BtItemExcluir.Enabled   := not (QryItens.State in [dsEdit, dsInsert]) and (QryPedidos.RecordCount > 0);
+end;
+
+procedure TFPedidos.DsPedidosStateChange(Sender: TObject);
+begin
+  BtSalvar.Enabled    := (QryPedidos.State in [dsEdit, dsInsert]);
+  BtCancelar.Enabled  := (QryPedidos.State in [dsEdit, dsInsert]);
+  BtNovo.Enabled      := not (QryPedidos.State in [dsEdit, dsInsert]);
+  BtEditar.Enabled    := not (QryPedidos.State in [dsEdit, dsInsert]);
+  BtExcluir.Enabled   := not (QryPedidos.State in [dsEdit, dsInsert]);
+  BtAtualizar.Enabled := not (QryPedidos.State in [dsEdit, dsInsert]);
+end;
+
+procedure TFPedidos.LkClientesEnter(Sender: TObject);
+begin
+  LkClientes.Color := clYellow;
+end;
+
+procedure TFPedidos.LkClientesExit(Sender: TObject);
+begin
+  LkClientes.Color := clWhite;
+end;
+
+procedure TFPedidos.EdPesquisaEnter(Sender: TObject);
+begin
+  EdPesquisa.Color := clYellow;
+end;
+
+procedure TFPedidos.EdPesquisaExit(Sender: TObject);
+begin
+  EdPesquisa.Color := clWhite;
+end;
+
+procedure TFPedidos.EdPesquisaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (key in ['0'..'9', chr(8)]) then
+    key := #0;
+end;
+
+procedure TFPedidos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  QryListagem.Close;
+  QryClientes.Close;
+  QryProdutos.Close;
+  action := caFree;
+  FPedidos := nil;
+end;
+
+procedure TFPedidos.FormCreate(Sender: TObject);
+begin
+  PagePedidos.ActivePage := TabListagem;
+  QryClientes.Open();
+  QryProdutos.Open();
+end;
+
+procedure TFPedidos.FormShow(Sender: TObject);
+begin
+  EdPesquisa.SetFocus;
+  QryListagem.Open();
+end;
+
+procedure TFPedidos.PesquisaPedido;
+begin
+  with QryListagem do
+  begin
+    if EdPesquisa.Text <> '' then
+    begin
+      Close;
+      Sql.Clear;
+      Sql.Add('SELECT pd.*, c.CLIENTE_NOME FROM PEDIDOS pd LEFT OUTER JOIN CLIENTES c ON c.CLIENTE_CODIGO = pd.CLIENTE_CODIGO WHERE pd.PEDIDO_CODIGO = :CODIGO ORDER BY pd.PEDIDO_CODIGO, pd.PEDIDO_DATA');
+      ParamByName('CODIGO').AsInteger := StrToInt(EdPesquisa.Text);
+      Open;
+    end
+    else
+    begin
+      Close;
+      Sql.Clear;
+      Sql.Add('SELECT pd.*, c.CLIENTE_NOME FROM PEDIDOS pd LEFT OUTER JOIN CLIENTES c ON c.CLIENTE_CODIGO = pd.CLIENTE_CODIGO ORDER BY pd.PEDIDO_CODIGO, pd.PEDIDO_DATA');
+      Open;
+    end;
+  end;
+end;
+
+procedure TFPedidos.QryItensAfterPost(DataSet: TDataSet);
+begin
+  AtualizarTotais;
+end;
+
+procedure TFPedidos.QryItensNewRecord(DataSet: TDataSet);
+  function NovoItem: SmallInt;
+    var
+      QryLocal: TFDQuery;
+  begin
+    QryLocal := TFDQuery.Create(nil);
+    with QryLocal do
+    begin
+      Connection  := DM.Connection;
+      Transaction := DM.Transaction;
+      Sql.Add('SELECT COALESCE(MAX(PEDIDO_ITEM),0) + 1 AS ITEM FROM PEDIDO_ITENS WHERE PEDIDO_CODIGO = :CODIGO');
+      ParamByName('CODIGO').AsInteger  := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
+      Open;
+      result := FindField('ITEM').AsInteger;
+    end;
+    FreeAndNil(QryLocal);
+  end;
+begin
+  QryItens.FindField('PEDIDO_CODIGO').AsInteger           := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
+  QryItens.FindField('PEDIDO_ITEM').AsInteger             := NovoItem;
+  QryItens.FindField('PEDIDO_QTDE').AsFloat               := 0;
+  QryItens.FindField('PEDIDO_VL_UNIT').AsFloat            := 0.00;
+  QryItens.FindField('PEDIDO_PERC_DESCONTO_ITEM').AsFloat := 0.00;
+  QryItens.FindField('PEDIDO_VL_DESCONTO_ITEM').AsFloat   := 0.00;
+  QryItens.FindField('PEDIDO_VL_TOTAL_ITEM').AsFloat      := 0.00;
+  QryItens.FindField('PEDIDO_TOTAL_BRUTO_ITEM').AsFloat   := 0.00;
+end;
+
+procedure TFPedidos.TabCadastroShow(Sender: TObject);
+begin
+  QryPedidos.Close;
+  QryPedidos.ParamByName('CODIGO').AsInteger := QryListagem.FindField('PEDIDO_CODIGO').AsInteger;
+  QryPedidos.Open;
+  LkClientes.SetFocus;
+  QryItens.Close;
+  QryItens.ParamByName('CODIGO').AsInteger := QryPedidos.FindField('PEDIDO_CODIGO').AsInteger;
+  QryItens.Open();
+end;
+
+procedure TFPedidos.TabListagemShow(Sender: TObject);
+begin
+  EdPesquisa.SetFocus;
+end;
+
+end.

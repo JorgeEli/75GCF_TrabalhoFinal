@@ -377,6 +377,7 @@ end;
 
 procedure TFClientes.FormShow(Sender: TObject);
 begin
+  EdPesquisa.SetFocus;
   QryListagem.Open();
 end;
 

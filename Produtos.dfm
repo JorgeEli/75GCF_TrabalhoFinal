@@ -24,7 +24,7 @@ object FProdutos: TFProdutos
     Top = 0
     Width = 1008
     Height = 729
-    ActivePage = TabCadastro
+    ActivePage = TabListagem
     Align = alClient
     TabOrder = 0
     object TabListagem: TTabSheet

@@ -23,7 +23,7 @@ object FClientes: TFClientes
     Top = 0
     Width = 1008
     Height = 729
-    ActivePage = TabCadastro
+    ActivePage = TabListagem
     Align = alClient
     TabOrder = 0
     object TabListagem: TTabSheet
@@ -142,7 +142,6 @@ object FClientes: TFClientes
         Color = clMoneyGreen
         ParentBackground = False
         TabOrder = 0
-        ExplicitTop = -6
         object Label4: TLabel
           Left = 5
           Top = 105
@@ -971,10 +970,6 @@ object FClientes: TFClientes
       Caption = 'Cadastro'
       ImageIndex = 1
       OnShow = TabCadastroShow
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -1023,7 +1018,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_NOME'
           DataSource = DsClientes
-          MaxLength = 60
           TabOrder = 1
           OnEnter = EdNomeEnter
           OnExit = EdNomeExit
@@ -1036,7 +1030,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_CPF'
           DataSource = DsClientes
-          MaxLength = 18
           TabOrder = 2
           OnEnter = EdCpfEnter
           OnExit = EdCpfExit
@@ -3078,7 +3071,6 @@ object FClientes: TFClientes
           ShowHint = True
           TabOrder = 5
           OnClick = BtAtualizarClick
-          ExplicitTop = 6
         end
       end
       object Panel4: TPanel
@@ -3090,7 +3082,6 @@ object FClientes: TFClientes
         Color = clGradientInactiveCaption
         ParentBackground = False
         TabOrder = 2
-        ExplicitTop = 231
       end
       object GroupBox1: TGroupBox
         Left = 0
@@ -3103,7 +3094,6 @@ object FClientes: TFClientes
         ParentBackground = False
         ParentColor = False
         TabOrder = 3
-        ExplicitTop = 89
         object Label5: TLabel
           Left = 10
           Top = 32
@@ -3157,7 +3147,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_LOGRADOURO'
           DataSource = DsClientes
-          MaxLength = 50
           TabOrder = 0
           OnEnter = EdLogradouroEnter
           OnExit = EdLogradouroExit
@@ -3170,7 +3159,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_ENDERECO_NUMERO'
           DataSource = DsClientes
-          MaxLength = 10
           TabOrder = 1
           OnEnter = EdNumeroEnter
           OnExit = EdNumeroExit
@@ -3183,7 +3171,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_BAIRRO'
           DataSource = DsClientes
-          MaxLength = 50
           TabOrder = 2
           OnEnter = EdBairroEnter
           OnExit = EdBairroExit
@@ -3196,7 +3183,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_CIDADE'
           DataSource = DsClientes
-          MaxLength = 60
           TabOrder = 4
           OnEnter = EdCidadeEnter
           OnExit = EdCidadeExit
@@ -3209,7 +3195,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_CEP'
           DataSource = DsClientes
-          MaxLength = 10
           TabOrder = 3
           OnEnter = EdCepEnter
           OnExit = EdCepExit
@@ -3222,7 +3207,6 @@ object FClientes: TFClientes
           CharCase = ecUpperCase
           DataField = 'CLIENTE_UF'
           DataSource = DsClientes
-          MaxLength = 2
           TabOrder = 5
           OnEnter = EdUfEnter
           OnExit = EdUfExit
